@@ -27,13 +27,18 @@ async function run() {
 
     const tourSpotCollection = client.db("tourSpotDB").collection("tourSpot");
 
-    // const database = client.db("insertDB");
-    // const haiku = database.collection("haiku");
-
+    // created to the TourSpot data
     app.post("/tourSpot", async (req, res) => {
       const newTourSpot = req.body;
       console.log(newTourSpot);
       const result = await tourSpotCollection.insertOne(newTourSpot);
+      res.send(result);
+    });
+
+    // get to the TourSpot data
+    app.get("/tourSpot", async (req, res) => {
+      const cursor = tourSpotCollection.find();
+      const result = await cursor.toArray();
       res.send(result);
     });
 
